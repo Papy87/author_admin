@@ -5,12 +5,13 @@ import {AppComponent} from './app.component';
 import {RegisterComponent} from './components/register/register.component';
 import {LoginComponent} from './components/login/login.component';
 import {FormsModule, ReactiveFormsModule,} from '@angular/forms';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AppRoutingModule} from "./app-routing.module";
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule} from "@angular/material/snack-bar";
 import { AuthorComponent } from './components/author/author.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {AuthInterceptor} from "./services/auth.interceptor";
 
 
 
@@ -34,7 +35,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 
 
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

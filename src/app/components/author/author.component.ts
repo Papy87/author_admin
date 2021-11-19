@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginRegisterService} from "../../services/login-register.service";
 import jwt_decode from 'jwt-decode';
+import {AuthorService} from "../../services/author.service";
 
 @Component({
   selector: 'app-author',
@@ -10,11 +11,12 @@ import jwt_decode from 'jwt-decode';
 export class AuthorComponent implements OnInit {
   token: string;
 
-  constructor(private loginRegisterService: LoginRegisterService) {
+  constructor(private loginRegisterService: LoginRegisterService, private authorsService: AuthorService) {
   }
 
   ngOnInit(): void {
     this.getToken()
+    this.getAuthors()
   }
 
   getToken() {
@@ -25,6 +27,15 @@ export class AuthorComponent implements OnInit {
 
   onLogout() {
     this.loginRegisterService.logout()
+  }
+
+  getAuthors() {
+    this.authorsService.getAllAutors().subscribe(data => {
+        console.log(data)
+      },
+      error => {
+        console.log(error)
+      })
   }
 
 }
