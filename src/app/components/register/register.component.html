@@ -1,0 +1,32 @@
+<div class="registration-div">
+  <div class="around-register">
+    <div class="form-group">
+      <a  [routerLink]="['/login']" class="link-primary float-right link">Login</a>
+    </div>
+    <div class="form-group">
+      <h2 class="login">Register</h2>
+    </div>
+    <form   name="register"  [formGroup]="form"  action="" method="post" (ngSubmit)="onSubmit()" >
+      <div class="form-group">
+        <label>Email Address</label>
+        <input class="form-control" formControlName="email" type="email" name="email" placeholder="abc@gmail.com" >
+      </div>
+      <div class="form-group">
+        <label>UserName</label>
+        <input class="form-control" type="text" formControlName="username" name="username" placeholder="username">
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input class="form-control" type="password" formControlName="password" name="password" placeholder="password">
+      </div>
+      <br>
+      <button type="submit" class="btn btn-secondary">Register</button>
+    </form>
+    <div class="form-group">
+      <div class="error-div">
+        <span class="error">{{errorMessage}}</span>
+      </div>
+    </div>
+  </div>
+</div>

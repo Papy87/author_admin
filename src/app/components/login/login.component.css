@@ -1,0 +1,41 @@
+.registration-div {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.form-group {
+  width: 700px;
+}
+
+.around-register {
+  border: 1px solid white;
+  border-radius: 20px;
+  padding: 20px;
+  backdrop-filter: blur(30px)
+}
+
+.label {
+  font-size: 20px;
+  color: white;
+}
+
+.login {
+  color: white;
+}
+
+
+.link {
+  font-size: 20px;
+  text-decoration: none;
+}
+h2{
+  text-align: center;
+}
+
+.error-div{
+  text-align: center;
+}
+
