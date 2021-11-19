@@ -38,3 +38,8 @@ span{
   color: red;
   font-weight: bold;
 }
+
+.label {
+  font-size: 20px;
+  color: white;
+}

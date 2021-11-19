@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   errorMessage: string;
 
   constructor(private loginRegisterService: LoginRegisterService, private router: Router, private snackbar: MatSnackBar, private renderer: Renderer2) {
-    renderer.setStyle(document.body, 'background', `url(https://images.unsplash.com/photo-1497633762265-9d179a990aa6?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1746&q=80) no-repeat center fixed`)
+    renderer.setStyle(document.body, 'background', `url(https://cdn.lifestyleasia.com/wp-content/uploads/sites/2/2020/02/25145253/Photo-by-Alfons-Morales-on-Unsplash-scaled-1535x900.jpg) no-repeat center fixed`)
     renderer.setStyle(document.body, 'background-size', `cover`);
     renderer.setStyle(document.body, 'background-repeat', `no-repeat`);
   }
