@@ -1,7 +1,21 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Renderer2} from '@angular/core';
 import {LoginRegisterService} from "../../services/login-register.service";
 import jwt_decode from 'jwt-decode';
 import {AuthorService} from "../../services/author.service";
+import {FlatTreeControl} from '@angular/cdk/tree';
+import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
+import {AuthorModel} from "../../models/author.model";
+import {BookModel} from "../../models/book.model";
+import {Router} from "@angular/router";
+
+
+
+
+interface ExampleFlatNode {
+  expandable: boolean;
+  name: string;
+  level: number;
+}
 
 @Component({
   selector: 'app-author',
@@ -9,33 +23,11 @@ import {AuthorService} from "../../services/author.service";
   styleUrls: ['./author.component.css']
 })
 export class AuthorComponent implements OnInit {
-  token: string;
+  constructor() {
 
-  constructor(private loginRegisterService: LoginRegisterService, private authorsService: AuthorService) {
   }
 
   ngOnInit(): void {
-    this.getToken()
-    this.getAuthors()
-  }
-
-  getToken() {
-    // @ts-ignore
-    this.token = jwt_decode(localStorage.getItem("token"));
-    console.log(this.token)
-  }
-
-  onLogout() {
-    this.loginRegisterService.logout()
-  }
-
-  getAuthors() {
-    this.authorsService.getAllAutors().subscribe(data => {
-        console.log(data)
-      },
-      error => {
-        console.log(error)
-      })
   }
 
 }

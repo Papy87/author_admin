@@ -12,6 +12,21 @@ import { MatSnackBarModule} from "@angular/material/snack-bar";
 import { AuthorComponent } from './components/author/author.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {AuthInterceptor} from "./services/auth.interceptor";
+import {CdkTreeModule} from '@angular/cdk/tree';
+import {MatIconModule} from '@angular/material/icon';
+import {MatTreeModule} from '@angular/material/tree';
+import {MatButtonModule} from '@angular/material/button';
+import { AuthorBooksComponent } from './components/author-books/author-books.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { AuthorListComponent } from './components/author-list/author-list.component';
+import { BookAddDialogComponent } from './components/book-add-dialog/book-add-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import { BookEditDialogComponent } from './components/book-edit-dialog/book-edit-dialog.component';
+import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
+// import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+
+
 
 
 
@@ -21,6 +36,12 @@ import {AuthInterceptor} from "./services/auth.interceptor";
     RegisterComponent,
     LoginComponent,
     AuthorComponent,
+    AuthorBooksComponent,
+    NavbarComponent,
+    AuthorListComponent,
+    BookAddDialogComponent,
+    BookEditDialogComponent,
+    DeleteDialogComponent,
 
   ],
   imports: [
@@ -31,9 +52,11 @@ import {AuthInterceptor} from "./services/auth.interceptor";
     AppRoutingModule,
     NoopAnimationsModule,
     MatSnackBarModule,
-    MatPaginatorModule
-
-
+    MatPaginatorModule,
+    MatIconModule,
+    MatTreeModule,
+    MatButtonModule,
+    MatDialogModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]

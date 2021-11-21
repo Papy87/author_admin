@@ -1,0 +1,38 @@
+<div class="modal-header">
+  <h5 class="modal-title">Add Book</h5>
+</div>
+<form *ngIf="bookEditForm" [formGroup]="bookEditForm"
+      (ngSubmit)="onSubmit()">
+  <div class="modal-body">
+    <fieldset>
+      <div class="form-row">
+        <div class="col-md-12">
+          <label><b>Title</b></label>
+          <input type="text" class="form-control" required="true" formControlName="title"
+                 placeholder="Title">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-12">
+          <label><b>Genre</b></label>
+          <input type="text" class="form-control" required="true" formControlName="genre"
+                 placeholder="Genre">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-12">
+          <label><b>Description</b></label>
+          <textarea type="text" class="form-control" required="true" formControlName="description"
+                    placeholder="Description"></textarea>
+        </div>
+      </div>
+      <div class="row">
+      </div>
+    </fieldset>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-success" type="submit" [disabled]="!bookEditForm.valid">Edit Book</button>
+    <button type="button" class="btn btn-secondary" (click)="onNoClick()" data-dismiss="modal">Close</button>
+  </div>
+</form>

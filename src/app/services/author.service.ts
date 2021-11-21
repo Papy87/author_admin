@@ -5,7 +5,7 @@ import {tap} from 'rxjs/operators';
 import {ResponseModel} from "../../models/response/response.model";
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
 @Injectable({
@@ -14,6 +14,7 @@ const httpOptions = {
 
 export class AuthorService {
   authenticated: boolean;
+
   constructor(private http: HttpClient, private router: Router) {
   }
 
@@ -25,10 +26,11 @@ export class AuthorService {
   }
 
 
-  getAllAutors(){
-    return this.http.get<ResponseModel>(this.baseUrl + '/authors?page=0&pageSize=5')
+  getAllAutors(page: number, pageSize: number) {
+    return this.http.get<ResponseModel>(this.baseUrl + `/authors?page=${page}&pageSize=${pageSize}`)
 
   }
+
   setSession(data) {
     localStorage.setItem('token', data.token);
   }
