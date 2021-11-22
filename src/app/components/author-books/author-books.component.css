@@ -2,3 +2,11 @@
   margin-right: 25px;
   cursor: pointer;
 }
+
+i{
+  font-size:20px
+}
+
+th{
+  text-align: center;
+}

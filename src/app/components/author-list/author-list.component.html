@@ -1,5 +1,5 @@
 <div style="margin-top: 5%">
-  <button class="btn btn-primary" *ngIf="isAdmin">Add Author</button>
+  <button  class="btn btn-outline-secondary my-2 my-sm-0" *ngIf="isAdmin" (click)=openAddAuthorDialog()>Add Author</button>
   <h2 style="text-align: center">AUTHOR LIST</h2>
 </div>
 
@@ -8,6 +8,7 @@
     <thead>
     <tr>
       <th scope="col">FULL NAME</th>
+      <th scope="col">EMAIL</th>
       <th scope="col">OPTIONS</th>
     </tr>
     </thead>
@@ -16,11 +17,19 @@
       <td>
         {{data.lastName + ' ' + data.firstName}}
       </td>
+      <td>
+        {{data.email}}
+      </td>
       <td style="width: 300px">
         <div class="options-div">
-          <span class="option-span" (click)=authorBooks(data.id)><i class="fas fa-book"></i></span>
-          <span class="option-span"><i class="fas fa-user-edit"></i></span>
-          <span class="option-span"> <i class="fas fa-trash-alt"></i></span>
+          <span class="option-span" matTooltip="Info about author books"
+                aria-label="Button that displays a tooltip when focused or hovered over" (click)=authorBooks(data.id)><i
+            class="fas fa-book"></i></span>
+          <span class="option-span" matTooltip="Edit Author"
+                aria-label="Button that displays a tooltip when focused or hovered over"  *ngIf="isAdmin" (click)=openEditAuthorDialog(data)><i class="fas fa-user-edit"></i></span>
+          <span class="option-span" matTooltip="Delete Author"
+                aria-label="Button that displays a tooltip when focused or hovered over" *ngIf="isAdmin" (click)=openDeleteAuthorDialog(data.id)> <i
+            class="fas fa-trash-alt"></i></span>
         </div>
 
 

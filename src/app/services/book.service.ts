@@ -21,15 +21,17 @@ export class BookService {
 
   getAurhorBooks(authorId, pageSize, pageNumber: number) {
     return this.http.get<ResponseModel>(this.baseUrl + `/books?authorId=${authorId}&page=${pageNumber}&pageSize=${pageSize}`)
-
   }
-
   addBook(data: any) {
     return this.http.post<ResponseModel>(this.baseUrl + `/book`, data)
   }
 
-  editBook(id:number,data: any) {
-    return this.http.put<ResponseModel>(this.baseUrl + `/book/`+id, data)
+  editBook(id: number, data: any) {
+    return this.http.put<ResponseModel>(this.baseUrl + `/book/` + id, data)
+  }
+
+  delteBook(id: number) {
+    return this.http.delete<ResponseModel>(this.baseUrl + `/book/` + id)
   }
 
 }

@@ -20,26 +20,29 @@ export class AuthorService {
 
   private baseUrl = 'http://localhost:3000';
 
-
-  registerUser(username: string, password: string, email: string) {
-    return this.http.post<ResponseModel>(this.baseUrl + '/register', {username, password, email})
-  }
-
-
   getAllAutors(page: number, pageSize: number) {
     return this.http.get<ResponseModel>(this.baseUrl + `/authors?page=${page}&pageSize=${pageSize}`)
-
   }
 
   setSession(data) {
     localStorage.setItem('token', data.token);
   }
 
-  logout() {
-    localStorage.removeItem("token");
-    this.router.navigate(['/'])
+  addAuthor(data: object) {
+    return this.http.post<ResponseModel>(this.baseUrl + `/author`, data)
   }
 
+  editAuthor(id: number, data: object) {
+    return this.http.put<ResponseModel>(this.baseUrl + `/author/` + id, data)
+  }
+
+  deleteAuthor(id: number) {
+    return this.http.delete<ResponseModel>(this.baseUrl + `/author/` + id)
+  }
+
+  getAuthorInfo(authorId: number) {
+    return this.http.get<ResponseModel>(this.baseUrl + `/author/` + authorId)
+  }
 
 }
 

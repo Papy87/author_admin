@@ -8,6 +8,9 @@ import {FormControl, FormGroup} from "@angular/forms";
 import {BookAddDialogComponent} from "../book-add-dialog/book-add-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {BookEditDialogComponent} from "../book-edit-dialog/book-edit-dialog.component";
+import {DeleteDialogComponent} from "../delete-dialog/delete-dialog.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {AuthorService} from "../../services/author.service";
 
 @Component({
   selector: 'app-author-books',
@@ -27,9 +30,12 @@ export class AuthorBooksComponent implements OnInit {
   public bookForm: FormGroup;
   myBooks: boolean = true;
   tokenAuthor: number;
+  showDiv: boolean
+  authorFirstName:string="John";
+  authorLastName:string="Do";
+  authorEmail:string="john@gmial.com";
 
-
-  constructor(public dialog: MatDialog, private bookService: BookService, private router: Router, private route: ActivatedRoute) {
+  constructor(public dialog: MatDialog, private bookService: BookService,private authorService: AuthorService, private snackbar: MatSnackBar, private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -43,6 +49,7 @@ export class AuthorBooksComponent implements OnInit {
     this.authorId = Number(this.route.snapshot.paramMap.get('id'));
     this.getToken(this.authorId);
     this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber);
+    this.getAuthorInfo(this.authorId);
     this.lookup()
   }
 
@@ -65,12 +72,33 @@ export class AuthorBooksComponent implements OnInit {
     this.bookService.getAurhorBooks(id, pageSize, pageNumber).subscribe(
       data => {
         this.booksCount = data.data.count;
+        this.showDiv = !!this.booksCount;
         this.length = data.data.count;
         this.bookData = data.data.rows;
       }, error => {
         console.log(error)
       }
     )
+  }
+
+  getAuthorInfo(id: number) {
+    this.authorService.getAuthorInfo(id).subscribe(
+        result=>{
+          let {data}=result;
+          this.authorFirstName=data.firstName;
+          this.authorLastName=data.lastName;
+          this.authorEmail=data.email;
+        }
+    )
+  }
+
+
+  private showSnackBarMessage(message: string, type?: string) {
+    const config = {duration: 2500};
+    if (type) {
+      config['panelClass'] = type;
+    }
+    this.snackbar.open(message, '', config);
   }
 
   getPageSizeOptions(): number[] {
@@ -80,7 +108,6 @@ export class AuthorBooksComponent implements OnInit {
       return [1, 5, 10, 20, 25, this.maxall];
     }
   }
-
 
   lookup(event?: PageEvent) {
     if (event) {
@@ -112,43 +139,65 @@ export class AuthorBooksComponent implements OnInit {
       if (result) {
         this.bookService.addBook(result).subscribe(
           result => {
-            console.log(result)
+            this.showSnackBarMessage("Book add successful", 'success');
+            this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber);
           },
-          error => console.log(error.toString())
+          error => this.showSnackBarMessage("Book add  failed", 'error')
         )
       } else {
-
       }
-      // else (this.router.navigate(['korisnici']), this.id = null)
     })
 
   }
 
   openEditBookDialog(data: any): void {
+    let {id} = data;
     const dialogRef = this.dialog.open(BookEditDialogComponent, {
       minWidth: '50vw',
       data: {data}
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        let {authorId, title, genre, description} = result;
+        let {title, genre, description} = result;
         let data = {
           title, genre, description
         }
-        this.bookService.editBook(authorId, data).subscribe(
-          result => {
+        this.bookService.editBook(id, data).subscribe(
+          () => {
 
-            console.log(result)
+            this.showSnackBarMessage("Book update successful", 'success');
+            this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber);
           },
-          error => console.log(error.toString())
+          () => this.showSnackBarMessage("Book update  failed", 'error')
         )
       } else {
-
       }
-      // else (this.router.navigate(['korisnici']), this.id = null)
     })
-
   }
 
+  openDeleteBookDialog(data: any): void {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      minWidth: '50vw'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        let {id} = data;
+        this.bookService.delteBook(id).subscribe(
+          () => {
+            this.showSnackBarMessage("Book delete successful", 'success');
+            this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber);
+          },
+          () => {
+            this.showSnackBarMessage("Book delete  failed", 'error');
+
+          }
+        )
+      } else {
+      }
+    })
+  }
+
+
 }
+

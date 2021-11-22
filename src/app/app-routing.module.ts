@@ -4,18 +4,15 @@ import {RegisterComponent} from "./components/register/register.component";
 import {LoginComponent} from "./components/login/login.component";
 import {AuthorComponent} from "./components/author/author.component";
 import {AuthorBooksComponent} from "./components/author-books/author-books.component";
+import { AuthGuard } from './services/guard/auth.guards';
 
 
 const appRoutes: Routes = [
-  {
-    path: '',
-    redirectTo: 'register',
-    pathMatch: 'full'
-  },
+  {path: '', redirectTo: 'register', pathMatch: 'full'},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'author', component: AuthorComponent},
-  {path: 'author/:id/books', component: AuthorBooksComponent},
+  {path: 'author', component: AuthorComponent,canActivate:[AuthGuard]},
+  {path: 'author/:id/books', component: AuthorBooksComponent,canActivate:[AuthGuard]},
 ];
 
 @NgModule({

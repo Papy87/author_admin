@@ -34,7 +34,6 @@ export class BookAddDialogComponent implements OnInit {
       genre: new FormControl(null, Validators.required),
       description: new FormControl(null, Validators.required),
     })
-
   }
 
   onSubmit() {

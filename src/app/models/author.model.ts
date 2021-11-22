@@ -5,6 +5,7 @@ export interface AuthorModel {
   firstName: string;
   lastName: string;
   id: number;
-  userId: number
+  userId: number;
+  email:string;
   books: BookModel [];
 }

@@ -1,1 +1,13 @@
-<p>delete-dialog works!</p>
+<div class="modal-header">
+  <h5>Delete</h5>
+</div>
+<form class="well form-horizontal table table-striped" (ngSubmit)="onSubmit()">
+  <div class="modal-body">
+    <h4 class="modal-title">Are you sure you want to delete?</h4>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger" type="submit">Delete</button>
+    <button type="button" class="btn btn-secondary" (click)="onNoClick()" data-dismiss="modal">Close</button>
+  </div>
+</form>
+

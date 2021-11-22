@@ -23,7 +23,9 @@ import { BookAddDialogComponent } from './components/book-add-dialog/book-add-di
 import {MatDialogModule} from "@angular/material/dialog";
 import { BookEditDialogComponent } from './components/book-edit-dialog/book-edit-dialog.component';
 import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
-// import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AutorEditDialogComponent } from './components/autor-edit-dialog/autor-edit-dialog.component';
+import { AutorAddDialogComponent } from './components/autor-add-dialog/autor-add-dialog.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 
 
@@ -42,6 +44,8 @@ import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.
     BookAddDialogComponent,
     BookEditDialogComponent,
     DeleteDialogComponent,
+    AutorEditDialogComponent,
+    AutorAddDialogComponent,
 
   ],
   imports: [
@@ -56,7 +60,8 @@ import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.
     MatIconModule,
     MatTreeModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTooltipModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]

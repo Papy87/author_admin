@@ -8,3 +8,11 @@ nav {
 }
 
 
+
+th,td{
+  text-align: center;
+}
+
+i{
+  font-size:20px
+}
