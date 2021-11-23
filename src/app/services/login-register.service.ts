@@ -26,8 +26,8 @@ export class LoginRegisterService {
         (catchError) => console.log(catchError)))
   }
 
-  registerUser(username: string, password: string, email: string) {
-    return this.http.post<ResponseModel>(this.baseUrl + '/register', {username, password, email})
+  registerUser(username: string, password: string) {
+    return this.http.post<ResponseModel>(this.baseUrl + '/register', {username, password})
   }
 
   setSession(data) {
@@ -39,51 +39,43 @@ export class LoginRegisterService {
     this.router.navigate(['/'])
   }
 
-
-  // isLoggedOut() {
-  //   const date = this.getExpiration();
-  //   if (date === null || date === undefined) { return true }
-  //   else if (!(date.valueOf() > new Date().valueOf())) { this.logout(); this.router.navigate(['']); return true }
-  //   else return false
-  //
-  // }
-  //
-  // getType() {
-  //   let token = localStorage.getItem("token");
-  //   let tokenInfo = this.getDecodedAccessToken(token);
-  //   return tokenInfo;
-  // }
-  // getName() {
-  //   let token = localStorage.getItem("token");
-  //   let tokenInfo = this.getDecodedAccessToken(token);
-  //   return tokenInfo.username;
-  // }
-  // getId() {
-  //   let token = localStorage.getItem("token");
-  //   let tokenInfo = this.getDecodedAccessToken(token);
-  //   return tokenInfo.id;
-  // }
-  // getExpiration() {
-  //   let token = localStorage.getItem("token");
-  //   let tokenInfo = this.getDecodedAccessToken(token); // decode token
-  //   if (token === null || token === undefined) return null;
-  //   else if (token) {
-  //     const date = new Date(0);
-  //     date.setUTCSeconds(tokenInfo.exp);
-  //     return date;
-  //   }
-  // }
-  //
-  getDecodedAccessToken(token: string): any {
-    console.log('inside',token)
-    try {
-      console.log('hoce')
-      return jwt_decode(token);
+  // @ts-ignore
+  isLoggedOut() {
+    let token = localStorage.getItem("token");
+    if (token) {
+      const date = this.getExpiration(token);
+      if (!date) {
+        return true
+      } else if (!(date.valueOf() > new Date().valueOf())) {
+        this.logout();
+        return true
+      } else {
+        return false
+      }
+    } else {
+      return true
     }
-    catch (Error) {
-      console.log('nece')
+  }
+
+  // @ts-ignore
+  getExpiration(token: string) {
+    let tokenInfo = this.getDecodedAccessToken(token); // decode token
+    if (tokenInfo === null || tokenInfo === undefined) {
+      return false
+    } else {
+      const date = new Date(0);
+      date.setUTCSeconds(tokenInfo.exp);
+      return date;
+    }
+  }
+
+  getDecodedAccessToken(token: string): any {
+    try {
+      return jwt_decode(token);
+    } catch {
       return null;
     }
   }
+
 }
 

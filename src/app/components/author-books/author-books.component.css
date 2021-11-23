@@ -3,10 +3,60 @@
   cursor: pointer;
 }
 
-i{
-  font-size:20px
+i {
+  font-size: 20px
 }
 
-th{
+th {
   text-align: center;
+}
+
+
+.example-form {
+  min-width: 200px;
+  max-width: 800px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+
+.author-info {
+  margin-top: 5%;
+  margin-bottom: 5%;
+  border: 1px solid black;
+  padding:3%;
+  width: 50%;
+  border-radius: 2%;
+
+}
+
+.no-books {
+  text-align: center
+}
+
+.author-table {
+  margin-top: 10%
+}
+
+.search-div {
+  width: 500px;
+  margin-bottom: 5%
+}
+
+.searc-lebel {
+  margin-bottom: 3%
+}
+
+.options-td {
+  width: 300px;
+  text-align: center
+}
+
+.data {
+  background: white;
+  height: 100%;
+  padding: 5%
 }

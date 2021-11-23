@@ -5,7 +5,6 @@ import {AuthorService} from "../../services/author.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthorModel} from "../../models/author.model";
 import {PageEvent} from "@angular/material/paginator";
-import {BookEditDialogComponent} from "../book-edit-dialog/book-edit-dialog.component";
 import {DeleteDialogComponent} from "../delete-dialog/delete-dialog.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
@@ -21,14 +20,15 @@ export class AuthorListComponent implements OnInit {
 
   constructor(private loginRegisterService: LoginRegisterService, private snackbar: MatSnackBar, private authorsService: AuthorService, private router: Router, private route: ActivatedRoute, public dialog: MatDialog,) {
   }
-
+  username:string;
+  search: string = "";
   token: object;
   authorsData: AuthorModel[];
   authorsCount: number;
   length: number;
   pageSize: number = 10;
-  pageSizeOptions: number[] = [1, 5, 10, 20, 25];
-  maxall: number = 50;
+  pageSizeOptions: number[] = [1, 5, 10];
+  maxall: number = 15;
   pageNumber: number = 0;
   isAdmin: boolean;
 
@@ -44,14 +44,15 @@ export class AuthorListComponent implements OnInit {
     this.token = jwt_decode(localStorage.getItem("token"));
     // @ts-ignore
     this.isAdmin = this.token.isAdmin;
+    // @ts-ignore
+    this.username=this.token.username;
   }
-
   onLogout() {
     this.loginRegisterService.logout()
   }
 
   getAuthors() {
-    this.authorsService.getAllAutors(this.pageNumber, this.pageSize).subscribe(data => {
+    this.authorsService.getAllAutors(this.pageNumber, this.pageSize,this.search).subscribe(data => {
         this.length = data.data.count;
         this.authorsData = data.data.rows;
       },
@@ -66,9 +67,9 @@ export class AuthorListComponent implements OnInit {
 
   getPageSizeOptions(): number[] {
     if (this.length > this.maxall) {
-      return [1, 5, 10, 20, 25, this.length];
+      return [1, 5, 10, this.length];
     } else {
-      return [1, 5, 10, 20, 25, this.maxall];
+      return [1, 5, 10, this.maxall];
     }
   }
 
@@ -102,9 +103,8 @@ export class AuthorListComponent implements OnInit {
   }
 
   openAddAuthorDialog(): void {
-
     const dialogRef = this.dialog.open(AutorAddDialogComponent, {
-      minWidth: '50vw',
+      minWidth: '40vw',
     });
     dialogRef.afterClosed().subscribe(result => {
 
@@ -125,7 +125,7 @@ export class AuthorListComponent implements OnInit {
   openEditAuthorDialog(data: any): void {
     let {id} = data;
     const dialogRef = this.dialog.open(AutorEditDialogComponent, {
-      minWidth: '50vw',
+      minWidth: '40vw',
       data: {data}
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -144,7 +144,7 @@ export class AuthorListComponent implements OnInit {
 
   openDeleteAuthorDialog(id: number): void {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      minWidth: '50vw'
+      minWidth: '40vw'
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -161,5 +161,10 @@ export class AuthorListComponent implements OnInit {
       } else {
       }
     })
+  }
+
+  authorSearch(event:any){
+    this.search=event;
+    this.getAuthors()
   }
 }

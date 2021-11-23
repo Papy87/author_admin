@@ -1,3 +1,26 @@
-span{
-  cursor:pointer;
+span {
+  cursor: pointer;
+}
+
+i {
+  font-size: 50px;
+}
+
+.logo-div {
+  margin-right: 2%;
+}
+
+.nav-link{
+  font-size: 18px
+}
+
+.active{
+  font-weight: bold;
+}
+
+.logout{
+  font-weight: bold;
+}
+.logout:hover{
+ color:darkred !important;
 }

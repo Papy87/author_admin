@@ -1,9 +1,11 @@
-.ng-valid[required], .ng-valid.required  {
+.ng-valid[required], .ng-valid.required {
   border-left: 5px solid #42A948 !important;
 }
-.ng-invalid[required]:not(form)  {
+
+.ng-invalid[required]:not(form) {
   border-left: 5px solid #a94442; /* red */
 }
+
 select {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -15,10 +17,12 @@ select {
   background: #d3d3d3;
   background-image: none;
 }
+
 /* Remove IE arrow */
 select::-ms-expand {
   display: none;
 }
+
 /* Custom Select */
 .select {
   position: relative;
@@ -30,6 +34,7 @@ select::-ms-expand {
   overflow: hidden;
   border-radius: .25em;
 }
+
 select {
   flex: 1;
   padding: 0 .5em;
@@ -51,8 +56,10 @@ select {
   -o-transition: .25s all ease;
   transition: .25s all ease;
 }
+
 /* Transition */
 .select:hover::after {
   color: #e012f3;
 }
+
 

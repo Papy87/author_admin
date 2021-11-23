@@ -6,13 +6,36 @@ nav {
   margin-right: 25px;
   cursor: pointer;
 }
-
-
-
 th,td{
   text-align: center;
 }
 
 i{
   font-size:20px
+}
+.no-books{
+  text-align: center
+}
+.author-table{
+  margin-top: 10%
+}
+.search-div{
+  width: 500px; margin-bottom:5%
+}
+.searc-lebel{
+  margin-bottom:3%
+}
+.no-authors{
+  text-align: center
+}
+.user-info{
+  margin-top: 5%;
+  margin-bottom: 5%;
+  border: 1px solid black;
+  padding:3%;
+  width: 50%;
+  border-radius: 2%;
+}
+.author-table{
+  margin-top: 10%;
 }

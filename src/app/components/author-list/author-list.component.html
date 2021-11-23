@@ -1,44 +1,61 @@
-<div style="margin-top: 5%">
-  <button  class="btn btn-outline-secondary my-2 my-sm-0" *ngIf="isAdmin" (click)=openAddAuthorDialog()>Add Author</button>
-  <h2 style="text-align: center">AUTHOR LIST</h2>
+<div >
+  <div class="user-info">
+    <h2>USER INFO</h2>
+    <label >Username:</label>
+    <h4>{{username}}</h4>
+  </div>
+  <button class="btn btn-outline-success my-2 my-sm-0" *ngIf="isAdmin" (click)=openAddAuthorDialog()>Add Author
+  </button>
+  <h2 style="text-align: center">AUTHORS LIST</h2>
 </div>
-
-<div class="author-table" style="margin-top: 10%">
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th scope="col">FULL NAME</th>
-      <th scope="col">EMAIL</th>
-      <th scope="col">OPTIONS</th>
-    </tr>
-    </thead>
-    <tbody *ngFor="let data of authorsData;">
-    <tr>
-      <td>
-        {{data.lastName + ' ' + data.firstName}}
-      </td>
-      <td>
-        {{data.email}}
-      </td>
-      <td style="width: 300px">
-        <div class="options-div">
+<div class="author-table" >
+  <div class="search-div">
+    <div class="form-group">
+      <label class="searc-lebel"><b>SEARCH</b></label>
+      <input [ngModel]="search" (ngModelChange)="authorSearch($event)" class="form-control" type="text" name="title"
+             placeholder="Author name">
+    </div>
+  </div>
+  <div *ngIf="length">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">FULL NAME</th>
+        <th scope="col">EMAIL</th>
+        <th scope="col">OPTIONS</th>
+      </tr>
+      </thead>
+      <tbody *ngFor="let data of authorsData;">
+      <tr>
+        <td>
+          {{data.fullName}}
+        </td>
+        <td>
+          {{data.email}}
+        </td>
+        <td style="width: 300px">
+          <div class="options-div">
           <span class="option-span" matTooltip="Info about author books"
                 aria-label="Button that displays a tooltip when focused or hovered over" (click)=authorBooks(data.id)><i
             class="fas fa-book"></i></span>
-          <span class="option-span" matTooltip="Edit Author"
-                aria-label="Button that displays a tooltip when focused or hovered over"  *ngIf="isAdmin" (click)=openEditAuthorDialog(data)><i class="fas fa-user-edit"></i></span>
-          <span class="option-span" matTooltip="Delete Author"
-                aria-label="Button that displays a tooltip when focused or hovered over" *ngIf="isAdmin" (click)=openDeleteAuthorDialog(data.id)> <i
-            class="fas fa-trash-alt"></i></span>
-        </div>
+            <span class="option-span" matTooltip="Edit Author"
+                  aria-label="Button that displays a tooltip when focused or hovered over" *ngIf="isAdmin"
+                  (click)=openEditAuthorDialog(data)><i class="fas fa-user-edit"></i></span>
+            <span class="option-span" matTooltip="Delete Author"
+                  aria-label="Button that displays a tooltip when focused or hovered over" *ngIf="isAdmin"
+                  (click)=openDeleteAuthorDialog(data.id)> <i
+              class="fas fa-trash-alt"></i></span>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <mat-paginator color="accent" #paginator [length]="length" [pageSize]="pageSize" showFirstLastButtons
+                   [pageSizeOptions]="getPageSizeOptions()" (page)="lookup($event)">
+    </mat-paginator>
+  </div>
+  <div *ngIf="!length" class="no-authors">
+    <h2>No Authors</h2>
+  </div>
 
-
-      </td>
-    </tr>
-    </tbody>
-  </table>
-
-  <mat-paginator color="accent" #paginator [length]="length" [pageSize]="pageSize" showFirstLastButtons
-                 [pageSizeOptions]="getPageSizeOptions()" (page)="lookup($event)">
-  </mat-paginator>
 </div>

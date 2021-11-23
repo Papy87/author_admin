@@ -6,5 +6,9 @@ nav {
   margin-right: 25px;
   cursor: pointer;
 }
-
+.data{
+  background:white;
+  height:100%;
+  padding:5%
+}
 

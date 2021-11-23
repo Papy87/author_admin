@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import jwt_decode from "jwt-decode";
-import {ResponseModel} from "../../../models/response/response.model";
 import {BookService} from "../../services/book.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PageEvent} from "@angular/material/paginator";
@@ -18,24 +17,25 @@ import {AuthorService} from "../../services/author.service";
   styleUrls: ['./author-books.component.css']
 })
 export class AuthorBooksComponent implements OnInit {
+  searchForm: FormGroup;
+  search:string='';
   token: any;
   bookData: any[];
   booksCount: number;
   authorId: number;
   length: number;
   pageSize: number = 10;
-  pageSizeOptions: number[] = [1, 5, 10, 20, 25];
-  maxall: number = 50;
+  pageSizeOptions: number[] = [1, 5, 10];
+  maxall: number = 15;
   pageNumber: number = 0;
   public bookForm: FormGroup;
   myBooks: boolean = true;
   tokenAuthor: number;
   showDiv: boolean
-  authorFirstName:string="John";
-  authorLastName:string="Do";
-  authorEmail:string="john@gmial.com";
+  authorFullName: string = "John";
+  authorEmail: string = "john@gmial.com";
 
-  constructor(public dialog: MatDialog, private bookService: BookService,private authorService: AuthorService, private snackbar: MatSnackBar, private router: Router, private route: ActivatedRoute) {
+  constructor(public dialog: MatDialog, private bookService: BookService, private authorService: AuthorService, private snackbar: MatSnackBar, private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -46,21 +46,17 @@ export class AuthorBooksComponent implements OnInit {
         description: new FormControl(null)
       }
     );
+    this.searchForm = new FormGroup(
+      {
+        title: new FormControl(null)
+      }
+    )
     this.authorId = Number(this.route.snapshot.paramMap.get('id'));
     this.getToken(this.authorId);
-    this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber);
+    this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber,this.search);
     this.getAuthorInfo(this.authorId);
     this.lookup()
   }
-
-  onSubmite() {
-    const title = this.bookForm.value['title'];
-    const genre = this.bookForm.value['genre'];
-    const description = this.bookForm.value['description'];
-
-
-  }
-
   getToken(id: number) {
     // @ts-ignore
     this.token = jwt_decode(localStorage.getItem("token"));
@@ -68,8 +64,8 @@ export class AuthorBooksComponent implements OnInit {
     this.myBooks = id === this.tokenAuthor;
   }
 
-  getAurhorBooks(id: number, pageSize: number, pageNumber: number) {
-    this.bookService.getAurhorBooks(id, pageSize, pageNumber).subscribe(
+  getAurhorBooks(id: number, pageSize: number, pageNumber: number,title:string) {
+    this.bookService.getAurhorBooks(id, pageSize, pageNumber,title).subscribe(
       data => {
         this.booksCount = data.data.count;
         this.showDiv = !!this.booksCount;
@@ -83,12 +79,11 @@ export class AuthorBooksComponent implements OnInit {
 
   getAuthorInfo(id: number) {
     this.authorService.getAuthorInfo(id).subscribe(
-        result=>{
-          let {data}=result;
-          this.authorFirstName=data.firstName;
-          this.authorLastName=data.lastName;
-          this.authorEmail=data.email;
-        }
+      result => {
+        let {data} = result;
+        this.authorFullName = data.fullName;
+        this.authorEmail = data.email;
+      }
     )
   }
 
@@ -103,9 +98,9 @@ export class AuthorBooksComponent implements OnInit {
 
   getPageSizeOptions(): number[] {
     if (this.length > this.maxall) {
-      return [1, 5, 10, 20, 25, this.length];
+      return [1, 5, 10,this.length];
     } else {
-      return [1, 5, 10, 20, 25, this.maxall];
+      return [1, 5, 10, this.maxall];
     }
   }
 
@@ -126,23 +121,23 @@ export class AuthorBooksComponent implements OnInit {
       replaceUrl: true,
 
     });
-    this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber)
+    this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber,this.search)
   }
 
 
   openAddBookDialog(): void {
     const dialogRef = this.dialog.open(BookAddDialogComponent, {
-      minWidth: '50vw',
+      minWidth: '40vw',
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.bookService.addBook(result).subscribe(
-          result => {
+          () => {
             this.showSnackBarMessage("Book add successful", 'success');
-            this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber);
+            this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber,this.search);
           },
-          error => this.showSnackBarMessage("Book add  failed", 'error')
+          () => this.showSnackBarMessage("Book add failed", 'error')
         )
       } else {
       }
@@ -153,7 +148,7 @@ export class AuthorBooksComponent implements OnInit {
   openEditBookDialog(data: any): void {
     let {id} = data;
     const dialogRef = this.dialog.open(BookEditDialogComponent, {
-      minWidth: '50vw',
+      minWidth: '40vw',
       data: {data}
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -166,7 +161,7 @@ export class AuthorBooksComponent implements OnInit {
           () => {
 
             this.showSnackBarMessage("Book update successful", 'success');
-            this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber);
+            this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber,this.search);
           },
           () => this.showSnackBarMessage("Book update  failed", 'error')
         )
@@ -177,16 +172,15 @@ export class AuthorBooksComponent implements OnInit {
 
   openDeleteBookDialog(data: any): void {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      minWidth: '50vw'
+      minWidth: '40vw'
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         let {id} = data;
         this.bookService.delteBook(id).subscribe(
           () => {
             this.showSnackBarMessage("Book delete successful", 'success');
-            this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber);
+            this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber,this.search);
           },
           () => {
             this.showSnackBarMessage("Book delete  failed", 'error');
@@ -196,6 +190,11 @@ export class AuthorBooksComponent implements OnInit {
       } else {
       }
     })
+  }
+
+  bookSearch(event:any){
+    this.search=event;
+    this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber,this.search);
   }
 
 

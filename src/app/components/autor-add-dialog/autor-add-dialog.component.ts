@@ -21,8 +21,7 @@ export class AutorAddDialogComponent implements OnInit {
 
   private initForm() {
     this.authorForm = new FormGroup({
-      firstName: new FormControl(null, Validators.required),
-      lastName: new FormControl(null, Validators.required),
+      fullName: new FormControl(null, Validators.required),
       username: new FormControl(null, Validators.required),
       email: new FormControl(null, Validators.required),
       password: new FormControl(null, Validators.required),
@@ -31,13 +30,12 @@ export class AutorAddDialogComponent implements OnInit {
 
 
   onSubmit() {
-    const firstName = this.authorForm.value['firstName'];
-    const lastName = this.authorForm.value['lastName'];
+    const fullName = this.authorForm.value['fullName'];
     const username = this.authorForm.value['username'];
     const email = this.authorForm.value['email'];
     const password = this.authorForm.value['password'];
     this.aurhor = {
-     firstName,lastName,username,email,password
+     fullName,username,email,password
     };
     this.dialogRef.close(this.aurhor);
   }

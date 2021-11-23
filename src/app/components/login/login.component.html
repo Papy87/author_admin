@@ -1,27 +1,26 @@
 <div class="registration-div">
   <div class="around-register">
     <div class="form-group">
-      <a [routerLink]="['/register']" class="link-primary link">Register</a>
-    </div>
-    <div class="form-group">
       <h2 class="login">Login</h2>
     </div>
     <form name="login" [formGroup]="form" method="post" action="" (ngSubmit)="onSubmit()" novalidate>
       <div class="form-group">
-        <label class="label">UserName</label>
+        <label class="label">Username</label>
         <input class="form-control" formControlName="username" type="text" name="username" placeholder="username">
       </div>
-      <div class="form-group">
+      <div class="form-group mt-2">
         <label class="label">Password</label>
         <input class="form-control" formControlName="password" type="password" name="password" placeholder="password">
       </div>
       <br>
-      <button type="submit" class="btn btn-secondary">Login</button>
+      <button type="submit" class="btn btn-primary">Login</button>
+
       <div class="form-group">
         <div class="error-div">
           <span class="error">{{errorMessage}}</span>
         </div>
       </div>
     </form>
+      <a [routerLink]="['/register']" class="link-primary link">Don't have an account? Register</a>
   </div>
 </div>

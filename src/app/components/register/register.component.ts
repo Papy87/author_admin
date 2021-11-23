@@ -1,4 +1,4 @@
-import {Component, OnInit, Renderer2} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormGroup, Validators, FormControl} from '@angular/forms';
 import {Router} from '@angular/router';
 import {LoginRegisterService} from "../../services/login-register.service";
@@ -14,10 +14,8 @@ export class RegisterComponent implements OnInit {
   form: FormGroup;
   errorMessage: string;
 
-  constructor(private loginRegisterService: LoginRegisterService, private router: Router, private snackbar: MatSnackBar, renderer: Renderer2) {
-    renderer.setStyle(document.body, 'background', `url(https://cdn.lifestyleasia.com/wp-content/uploads/sites/2/2020/02/25145253/Photo-by-Alfons-Morales-on-Unsplash-scaled-1535x900.jpg) no-repeat center fixed`)
-    renderer.setStyle(document.body, 'background-size', `cover`);
-    renderer.setStyle(document.body, 'background-repeat', `no-repeat`);
+  constructor(private loginRegisterService: LoginRegisterService, private router: Router, private snackbar: MatSnackBar) {
+
   }
 
   ngOnInit() {
@@ -36,27 +34,25 @@ export class RegisterComponent implements OnInit {
     this.form = new FormGroup({
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.required),
     })
   }
 
 
 
   onSubmit(): void {
-    // @ts-ignore
-    let email = this.form.value['email'];
+
     // @ts-ignore
     let password = this.form.value['password']
     // @ts-ignore
     let username = this.form.value['username']
 
-    if (!username || !password || !email) {
+    if (!username || !password ) {
       this.errorMessage = 'Molim vas unesite sve neophodne podatke.'
       return
     }
     this.form.reset()
-    this.loginRegisterService.registerUser(username, password, email).subscribe(
-      data => {
+    this.loginRegisterService.registerUser(username, password).subscribe(
+      () => {
         this.showSnackBarMessage("Registration successful", 'success');
         this.router.navigate(['login']);
       },

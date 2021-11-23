@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {LoginRegisterService} from "../../services/login-register.service";
 import jwtDecode from "jwt-decode";
 import {ActivatedRoute, Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-navbar',
@@ -15,10 +16,9 @@ export class NavbarComponent implements OnInit {
   showBooks: boolean;
   activeRoute: string;
   component: any;
-  showAuthors: boolean = false;
-  showMyBooks: boolean = true;
+  logedout:boolean;
 
-  constructor(private loginRegisterService: LoginRegisterService, private route: Router) {
+  constructor(private loginRegisterService: LoginRegisterService, private route: Router, private snackbar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -27,36 +27,30 @@ export class NavbarComponent implements OnInit {
     this.authorId = this.token.authorId;
     // @ts-ignore
     this.isAdmin = this.token.isAdmin;
-
     this.activeRoute = this.route.url;
+    this.logedout = this.isLogOut()
+    if(this.logedout){
+      this.loginRegisterService.logout()
+      this.showSnackBarMessage("Token expired", 'error');
 
-    if (this.activeRoute.includes("books")) {
-      console.log('active')
-      this.showAuthors = true
-      this.showMyBooks = false
-    } else {
-      console.log('not')
-
-      this.showAuthors = false
-      this.showMyBooks = true
     }
+  }
+
+  private showSnackBarMessage(message: string, type?: string) {
+    const config = {duration: 2500, width:'250px'};
+    if (type) {
+      config['panelClass'] = type;
+    }
+    this.snackbar.open(message, '', config);
   }
 
 
   onLogout() {
     this.loginRegisterService.logout()
+    this.showSnackBarMessage("User logout successful", 'success')
+
   }
-
-
-  myBooks() {
-    this.route.navigate(["author/", this.authorId, "books"], {
-      queryParams: {page: 0, pageSize: 10}
-    })
-  }
-
-  authors() {
-    this.route.navigate(["author"], {
-      queryParams: {page: 0, pageSize: 10}
-    })
+  isLogOut() {
+    return this.loginRegisterService.isLoggedOut()
   }
 }

@@ -7,7 +7,7 @@
 }
 
 .form-group {
-  width: 700px;
+  width: 500px;
 }
 
 .around-register {
@@ -24,12 +24,17 @@
 
 .login {
   color: white;
+
 }
 
 
 .link {
   font-size: 20px;
   text-decoration: none;
+  display: block;
+  margin-top: 15px;
+
+
 }
 h2{
   text-align: center;
@@ -40,4 +45,11 @@ h2{
 }
 a{
   color:white;
+  text-align: center;
+}
+a:hover{
+  color:lightgrey;
+}
+.btn-primary{
+  width:100%
 }

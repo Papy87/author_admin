@@ -1,7 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import jwtDecode from "jwt-decode";
 
 class DialogData {
 }
@@ -19,7 +18,6 @@ export class AutorEditDialogComponent implements OnInit {
 
 
   ngOnInit() {
-
     // @ts-ignore
     this.author = this.data.data;
     this.initForm(this.author);
@@ -29,12 +27,9 @@ export class AutorEditDialogComponent implements OnInit {
   private initForm(author: object) {
     this.editAuthorForm = new FormGroup({
       // @ts-ignore
-      firstName: new FormControl(author.firstName, Validators.required),
-      // @ts-ignore
-      lastName: new FormControl(author.lastName, Validators.required),
+      fullName: new FormControl(author.fullName, Validators.required),
       // @ts-ignore
       email: new FormControl(author.email, Validators.required),
-      // @ts-ignore
     })
 
   }
@@ -44,11 +39,10 @@ export class AutorEditDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    const firstName = this.editAuthorForm.value['firstName'];
-    const lastName = this.editAuthorForm.value['lastName'];
+    const fullName = this.editAuthorForm.value['fullName'];
     const email = this.editAuthorForm.value['email'];
     this.author = {
-      firstName,lastName,email
+      fullName,email
     };
     this.dialogRef.close(this.author);
   }

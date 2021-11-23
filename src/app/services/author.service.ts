@@ -1,7 +1,5 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Injectable, Renderer2} from '@angular/core';
-import {Router} from '@angular/router';
-import {tap} from 'rxjs/operators';
+import {Injectable} from '@angular/core';
 import {ResponseModel} from "../../models/response/response.model";
 
 const httpOptions = {
@@ -11,38 +9,30 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-
 export class AuthorService {
   authenticated: boolean;
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient) {
   }
-
   private baseUrl = 'http://localhost:3000';
-
-  getAllAutors(page: number, pageSize: number) {
-    return this.http.get<ResponseModel>(this.baseUrl + `/authors?page=${page}&pageSize=${pageSize}`)
-  }
-
-  setSession(data) {
-    localStorage.setItem('token', data.token);
+  getAllAutors(page: number, pageSize: number, name?: string) {
+    return this.http.get<ResponseModel>(this.baseUrl + `/authors?page=${page}&pageSize=${pageSize}&name=${name}`, httpOptions)
   }
 
   addAuthor(data: object) {
-    return this.http.post<ResponseModel>(this.baseUrl + `/author`, data)
+    return this.http.post<ResponseModel>(this.baseUrl + `/author`, data, httpOptions)
   }
 
   editAuthor(id: number, data: object) {
-    return this.http.put<ResponseModel>(this.baseUrl + `/author/` + id, data)
+    return this.http.put<ResponseModel>(this.baseUrl + `/author/` + id, data, httpOptions)
   }
 
   deleteAuthor(id: number) {
-    return this.http.delete<ResponseModel>(this.baseUrl + `/author/` + id)
+    return this.http.delete<ResponseModel>(this.baseUrl + `/author/` + id, httpOptions)
   }
 
   getAuthorInfo(authorId: number) {
-    return this.http.get<ResponseModel>(this.baseUrl + `/author/` + authorId)
+    return this.http.get<ResponseModel>(this.baseUrl + `/author/` + authorId, httpOptions)
   }
-
 }
 
