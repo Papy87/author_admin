@@ -1,8 +1,10 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable, Renderer2} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {tap} from 'rxjs/operators';
 import {ResponseModel} from "../../models/response/response.model";
+import {environment} from "../environments/environments"
+
 
 import jwt_decode from 'jwt-decode';
 
@@ -12,11 +14,8 @@ import jwt_decode from 'jwt-decode';
 
 export class LoginRegisterService {
   authenticated: boolean;
-
-  constructor(private http: HttpClient, private router: Router) {
-  }
-
-  private baseUrl = 'http://localhost:3000';
+  private baseUrl = environment.baseUrl;
+  constructor(private http: HttpClient, private router: Router) {}
 
   loginUser(username: string, password: string) {
     return this.http.post<ResponseModel>(this.baseUrl + '/login', {username, password})
@@ -76,6 +75,5 @@ export class LoginRegisterService {
       return null;
     }
   }
-
 }
 

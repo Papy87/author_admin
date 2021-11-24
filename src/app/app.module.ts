@@ -26,6 +26,7 @@ import { AutorEditDialogComponent } from './components/autor-edit-dialog/autor-e
 import { AutorAddDialogComponent } from './components/autor-add-dialog/autor-add-dialog.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatCardModule} from "@angular/material/card";
 
 
 
@@ -60,6 +61,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
     MatDialogModule,
     MatTooltipModule,
     MatFormFieldModule,
+    MatCardModule,
 
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginRegisterService} from "../../services/login-register.service";
 import jwtDecode from "jwt-decode";
-import {ActivatedRoute, Router} from "@angular/router";
+import { Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
@@ -47,7 +47,7 @@ export class NavbarComponent implements OnInit {
 
   onLogout() {
     this.loginRegisterService.logout()
-    this.showSnackBarMessage("User logout successful", 'success')
+    this.showSnackBarMessage("User logout successful", 'snackbar-success')
 
   }
   isLogOut() {

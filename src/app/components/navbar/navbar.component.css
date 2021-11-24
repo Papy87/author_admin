@@ -24,3 +24,15 @@ i {
 .logout:hover{
  color:darkred !important;
 }
+.logout-li{
+  margin-left:auto
+}
+i{
+  font-size:50px
+}
+.navbar-div{
+  border-bottom: 2px solid black;margin-top:5%
+}
+ul{
+  width: 100%;
+}

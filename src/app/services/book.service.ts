@@ -1,10 +1,8 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {ResponseModel} from "../../models/response/response.model";
+import {environment} from "../environments/environments"
 
-const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
-};
 
 @Injectable({
   providedIn: 'root'
@@ -13,21 +11,21 @@ const httpOptions = {
 export class BookService {
   constructor(private http: HttpClient) {
   }
-  private baseUrl = 'http://localhost:3000';
+  private baseUrl = environment.baseUrl;
 
   getAurhorBooks(authorId, pageSize, pageNumber: number,title:string) {
-    return this.http.get<ResponseModel>(this.baseUrl + `/books?authorId=${authorId}&page=${pageNumber}&pageSize=${pageSize}&title=${title}`,httpOptions)
+    return this.http.get<ResponseModel>(this.baseUrl + `/books?authorId=${authorId}&page=${pageNumber}&pageSize=${pageSize}&title=${title}`)
   }
   addBook(data: any) {
-    return this.http.post<ResponseModel>(this.baseUrl + `/book`, data,httpOptions)
+    return this.http.post<ResponseModel>(this.baseUrl + `/book`, data)
   }
 
   editBook(id: number, data: any) {
-    return this.http.put<ResponseModel>(this.baseUrl + `/book/` + id, data,httpOptions)
+    return this.http.put<ResponseModel>(this.baseUrl + `/book/` + id, data)
   }
 
   delteBook(id: number) {
-    return this.http.delete<ResponseModel>(this.baseUrl + `/book/` + id,httpOptions)
+    return this.http.delete<ResponseModel>(this.baseUrl + `/book/` + id)
   }
 
 }

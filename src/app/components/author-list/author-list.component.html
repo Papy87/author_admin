@@ -1,10 +1,14 @@
 <div >
   <div class="user-info">
-    <h2>USER INFO</h2>
-    <label >Username:</label>
-    <h4>{{username}}</h4>
+    <mat-card class="example-card">
+      <mat-card-title>USER INFO</mat-card-title>
+      <mat-card-content>
+        <label>Username:</label>
+        <h4>{{username}}</h4>
+      </mat-card-content>
+    </mat-card>
   </div>
-  <button class="btn btn-outline-success my-2 my-sm-0" *ngIf="isAdmin" (click)=openAddAuthorDialog()>Add Author
+  <button class="btn btn-success my-2 my-sm-0" *ngIf="isAdmin" (click)=openAddAuthorDialog()>Add Author
   </button>
   <h2 style="text-align: center">AUTHORS LIST</h2>
 </div>
@@ -33,7 +37,7 @@
         <td>
           {{data.email}}
         </td>
-        <td style="width: 300px">
+        <td class="option-td">
           <div class="options-div">
           <span class="option-span" matTooltip="Info about author books"
                 aria-label="Button that displays a tooltip when focused or hovered over" (click)=authorBooks(data.id)><i

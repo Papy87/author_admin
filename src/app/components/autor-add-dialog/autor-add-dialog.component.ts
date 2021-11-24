@@ -35,7 +35,7 @@ export class AutorAddDialogComponent implements OnInit {
     const email = this.authorForm.value['email'];
     const password = this.authorForm.value['password'];
     this.aurhor = {
-     fullName,username,email,password
+      fullName, username, email, password
     };
     this.dialogRef.close(this.aurhor);
   }

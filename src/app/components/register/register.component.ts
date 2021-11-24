@@ -47,17 +47,20 @@ export class RegisterComponent implements OnInit {
     let username = this.form.value['username']
 
     if (!username || !password ) {
-      this.errorMessage = 'Molim vas unesite sve neophodne podatke.'
+      this.errorMessage = 'Please enter the necessary information'
       return
     }
     this.form.reset()
     this.loginRegisterService.registerUser(username, password).subscribe(
       () => {
-        this.showSnackBarMessage("Registration successful", 'success');
+        this.errorMessage="";
+        this.showSnackBarMessage("Registration successful", 'snackbar-success');
         this.router.navigate(['login']);
       },
       error => {
-        this.showSnackBarMessage(error.error.message, 'error');
+        console.log(error)
+        this.errorMessage=error.error.message;
+        this.showSnackBarMessage(error.error.message, 'snackbar-error');
       }
     )
   }

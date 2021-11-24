@@ -112,10 +112,10 @@ export class AuthorListComponent implements OnInit {
 
         this.authorsService.addAuthor(result).subscribe(
           () => {
-            this.showSnackBarMessage("Author add successful", 'success');
+            this.showSnackBarMessage("Author add successful", 'snackbar-success');
             this.getAuthors();
           },
-          () => this.showSnackBarMessage("Author add failed", 'error')
+          () => this.showSnackBarMessage("Author add failed", 'snackbar-error')
         )
       } else {
       }
@@ -132,10 +132,10 @@ export class AuthorListComponent implements OnInit {
       if (result) {
         this.authorsService.editAuthor(id, result).subscribe(
           () => {
-            this.showSnackBarMessage("Author update successful", 'success');
+            this.showSnackBarMessage("Author update successful", 'snackbar-success');
             this.getAuthors();
           },
-          () => this.showSnackBarMessage("Author update  failed", 'error')
+          () => this.showSnackBarMessage("Author update  failed", 'snackbar-error')
         )
       } else {
       }
@@ -150,11 +150,11 @@ export class AuthorListComponent implements OnInit {
       if (result) {
         this.authorsService.deleteAuthor(id).subscribe(
           () => {
-            this.showSnackBarMessage("Author delete successful", 'success');
+            this.showSnackBarMessage("Author delete successful", 'snackbar-success');
             this.getAuthors();
           },
           () => {
-            this.showSnackBarMessage("Author delete  failed", 'error');
+            this.showSnackBarMessage("Author delete  failed", 'snackbar-error');
 
           }
         )

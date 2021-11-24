@@ -31,11 +31,12 @@ i{
 .user-info{
   margin-top: 5%;
   margin-bottom: 5%;
-  border: 1px solid black;
-  padding:3%;
   width: 50%;
-  border-radius: 2%;
 }
 .author-table{
   margin-top: 10%;
+}
+
+.option-td{
+  width:300px;
 }

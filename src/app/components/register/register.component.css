@@ -27,20 +27,17 @@
 .login {
   color: white;
 }
-.error-div{
+.error-div {
   text-align: center;
+  margin-top: 10px;
+  color: red;
+  font-size: 20px;
+  height:20px;
 }
-
 
 h2{
   text-align: center;
 }
-
-span{
-  color: red;
-  font-weight: bold;
-}
-
 .label {
   font-size: 20px;
   color: white;

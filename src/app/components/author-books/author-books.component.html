@@ -5,15 +5,19 @@
   </div>
   <div >
     <div class="author-info" >
-      <h2>AUTHOR INFO</h2>
-      <label>Name:</label>
-      <h4>{{authorFullName}}</h4>
-      <label>Email:</label>
-      <h5>{{authorEmail}}</h5>
+      <mat-card class="example-card">
+        <mat-card-title>AUTHOR INFO</mat-card-title>
+        <mat-card-content>
+          <label>Name:</label>
+          <h4>{{authorFullName}}</h4>
+          <label>Email:</label>
+          <h5>{{authorEmail}}</h5>
+        </mat-card-content>
+      </mat-card>
     </div>
     <div>
       <button *ngIf="myBooks" class="btn btn-success" (click)="openAddBookDialog()">Add Book</button>
-      <h2 style="text-align: center">BOOKS LIST</h2>
+      <h2 >BOOKS LIST</h2>
     </div>
     <div class="author-table" >
       <div class="search-div">

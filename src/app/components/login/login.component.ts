@@ -1,4 +1,4 @@
-import {Component, OnInit, Renderer2} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginRegisterService} from "../../services/login-register.service";
 import {Router} from "@angular/router";
@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   errorMessage: string;
   logedout: boolean;
 
-  constructor(private loginRegisterService: LoginRegisterService, private router: Router, private snackbar: MatSnackBar, private renderer: Renderer2) {
+  constructor(private loginRegisterService: LoginRegisterService, private router: Router, private snackbar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -50,18 +50,19 @@ export class LoginComponent implements OnInit {
     let username = this.form.value['username']
 
     if (!username || !password) {
-      this.errorMessage = 'Molim vas unesite sve neophodne podatke.'
+      this.errorMessage = 'Please enter the necessary information'
       return
     }
     this.form.reset()
     this.loginRegisterService.loginUser(username, password).subscribe(
       data => {
-        this.renderer.removeStyle(document.body, "background-image");
-        this.showSnackBarMessage(data.message, 'success');
+        this.errorMessage="";
+        this.showSnackBarMessage(data.message, 'snackbar-success');
         this.router.navigate(['authors'])
       },
       error => {
-        this.showSnackBarMessage(error.error.message, 'error');
+        this.errorMessage=error.error.message
+        this.showSnackBarMessage(error.error.message, 'snackbar-error');
       }
     )
   }

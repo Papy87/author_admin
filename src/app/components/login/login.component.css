@@ -26,30 +26,34 @@
   color: white;
 
 }
-
-
 .link {
   font-size: 20px;
   text-decoration: none;
   display: block;
   margin-top: 15px;
-
-
 }
-h2{
+
+h2 {
   text-align: center;
 }
 
-.error-div{
+.error-div {
+  text-align: center;
+  margin-top: 10px;
+  color: red;
+  font-size: 20px;
+  height:20px;
+}
+
+a {
+  color: white;
   text-align: center;
 }
-a{
-  color:white;
-  text-align: center;
+
+a:hover {
+  color: lightgrey;
 }
-a:hover{
-  color:lightgrey;
-}
-.btn-primary{
-  width:100%
+
+.btn-primary {
+  width: 100%
 }

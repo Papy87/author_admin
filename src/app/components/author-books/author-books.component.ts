@@ -18,7 +18,7 @@ import {AuthorService} from "../../services/author.service";
 })
 export class AuthorBooksComponent implements OnInit {
   searchForm: FormGroup;
-  search:string='';
+  search: string = '';
   token: any;
   bookData: any[];
   booksCount: number;
@@ -36,6 +36,9 @@ export class AuthorBooksComponent implements OnInit {
   authorEmail: string = "john@gmial.com";
 
   constructor(public dialog: MatDialog, private bookService: BookService, private authorService: AuthorService, private snackbar: MatSnackBar, private router: Router, private route: ActivatedRoute) {
+    this.route.paramMap.subscribe(() => {
+      this.ngOnInit()
+    })
   }
 
   ngOnInit(): void {
@@ -53,10 +56,11 @@ export class AuthorBooksComponent implements OnInit {
     )
     this.authorId = Number(this.route.snapshot.paramMap.get('id'));
     this.getToken(this.authorId);
-    this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber,this.search);
+    this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber, this.search);
     this.getAuthorInfo(this.authorId);
     this.lookup()
   }
+
   getToken(id: number) {
     // @ts-ignore
     this.token = jwt_decode(localStorage.getItem("token"));
@@ -64,8 +68,8 @@ export class AuthorBooksComponent implements OnInit {
     this.myBooks = id === this.tokenAuthor;
   }
 
-  getAurhorBooks(id: number, pageSize: number, pageNumber: number,title:string) {
-    this.bookService.getAurhorBooks(id, pageSize, pageNumber,title).subscribe(
+  getAurhorBooks(id: number, pageSize: number, pageNumber: number, title: string) {
+    this.bookService.getAurhorBooks(id, pageSize, pageNumber, title).subscribe(
       data => {
         this.booksCount = data.data.count;
         this.showDiv = !!this.booksCount;
@@ -98,7 +102,7 @@ export class AuthorBooksComponent implements OnInit {
 
   getPageSizeOptions(): number[] {
     if (this.length > this.maxall) {
-      return [1, 5, 10,this.length];
+      return [1, 5, 10, this.length];
     } else {
       return [1, 5, 10, this.maxall];
     }
@@ -121,7 +125,7 @@ export class AuthorBooksComponent implements OnInit {
       replaceUrl: true,
 
     });
-    this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber,this.search)
+    this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber, this.search)
   }
 
 
@@ -134,10 +138,10 @@ export class AuthorBooksComponent implements OnInit {
       if (result) {
         this.bookService.addBook(result).subscribe(
           () => {
-            this.showSnackBarMessage("Book add successful", 'success');
-            this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber,this.search);
+            this.showSnackBarMessage("Book add successful", 'snackbar-success');
+            this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber, this.search);
           },
-          () => this.showSnackBarMessage("Book add failed", 'error')
+          () => this.showSnackBarMessage("Book add failed", 'snackbar-error')
         )
       } else {
       }
@@ -160,10 +164,10 @@ export class AuthorBooksComponent implements OnInit {
         this.bookService.editBook(id, data).subscribe(
           () => {
 
-            this.showSnackBarMessage("Book update successful", 'success');
-            this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber,this.search);
+            this.showSnackBarMessage("Book update successful", 'snackbar-success');
+            this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber, this.search);
           },
-          () => this.showSnackBarMessage("Book update  failed", 'error')
+          () => this.showSnackBarMessage("Book update  failed", 'snackbar-error')
         )
       } else {
       }
@@ -179,11 +183,11 @@ export class AuthorBooksComponent implements OnInit {
         let {id} = data;
         this.bookService.delteBook(id).subscribe(
           () => {
-            this.showSnackBarMessage("Book delete successful", 'success');
-            this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber,this.search);
+            this.showSnackBarMessage("Book delete successful", 'snackbar-success');
+            this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber, this.search);
           },
           () => {
-            this.showSnackBarMessage("Book delete  failed", 'error');
+            this.showSnackBarMessage("Book delete  failed", 'snackbar-error');
 
           }
         )
@@ -192,9 +196,9 @@ export class AuthorBooksComponent implements OnInit {
     })
   }
 
-  bookSearch(event:any){
-    this.search=event;
-    this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber,this.search);
+  bookSearch(event: any) {
+    this.search = event;
+    this.getAurhorBooks(this.authorId, this.pageSize, this.pageNumber, this.search);
   }
 
 
